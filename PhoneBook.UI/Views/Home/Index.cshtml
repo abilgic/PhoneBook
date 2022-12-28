@@ -14,6 +14,11 @@
                 <tr>
                     <th>Id</th>
                     <th>Name</th>
+                    <th>LastName</th>
+                    <th>Company</th>
+                    <th>PhoneNumber</th>
+                    <th>Email</th>
+                    <th>Location</th>
                     <th>Description</th>
                     <th>CreateDate</th>
                     <th>Actions</th>
@@ -25,6 +30,11 @@
                     <tr>
                         <td>@e.Id</td>
                         <td>@e.Name</td>
+                        <td>@e.LastName</td>
+                        <td>@e.Company</td>
+                        <td>@e.PhoneNumber</td>
+                        <td>@e.Email</td>
+                        <td>@e.Location</td>
                         <td>@e.Description</td>
                         <td>@e.CreateDate</td>
                         <td text-right">
@@ -55,6 +65,26 @@
                     <label>Name</label>
                     <input type="hidden" id="hdnContactId" />
                     <input type="text" name="Name" id="Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>LastName</label>
+                    <input type="text" name="LastName" id="LastName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Company</label>
+                    <input type="text" name="Company" id="Company" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>PhoneNumber</label>
+                    <input type="text" name="PhoneNumber" id="PhoneNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" name="Email" id="Email" class="form-control" />
+                </div>
+                 <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" name="Location" id="Location" class="form-control" />
                 </div>
                 <div class="form-group">
                     <label>Description</label>
@@ -93,8 +123,12 @@
                 }).done(function (data) {
                     if (data) {
                         $("#hdnContactId").val(data.id);
-                        alert("hdnContactId-"+$("#hdnContactId").val());
                         $("#Name").val(data.name);
+                        $("#LastName").val(data.lastName);
+                        $("#Company").val(data.company);
+                        $("#PhoneNumber").val(data.phoneNumber);
+                        $("#Email").val(data.email);
+                        $("#Location").val(data.location);
                         $("#Description").val(data.description);
                     }
                 });
@@ -104,6 +138,11 @@
             $("#btnSave").click(function () {
                 var jsonInput = {
                     name: $("#Name").val(),
+                    lastName: $("#LastName").val(),
+                    company: $("#Company").val(),
+                    phoneNumber: $("#PhoneNumber").val(),
+                    email: $("#Email").val(),
+                    location: $("#Location").val(),
                     description: $("#Description").val()
                 };
 
@@ -126,6 +165,11 @@
                 var jsonInput = {
                     id: $("#hdnContactId").val(),
                     name: $("#Name").val(),
+                    lastName: $("#LastName").val(),
+                    company: $("#Company").val(),
+                    phoneNumber: $("#PhoneNumber").val(),
+                    email: $("#Email").val(),
+                    location: $("#Location").val(),
                     description: $("#Description").val()
                 };
 

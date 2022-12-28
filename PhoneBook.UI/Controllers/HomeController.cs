@@ -1,27 +1,67 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PhoneBook.UI.Models;
+using PhoneBook.UI.Services;
 using System.Diagnostics;
 
-namespace PhoneBook.UI.Controllers
+namespace PhoneContact.UI.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly PhoneBookService _phoneService;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, PhoneBookService phoneContactService)
         {
             _logger = logger;
+            _phoneService = phoneContactService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
+        {var contactList =new List<Contact>();
+             contactList= await _phoneService.GetAsync();
+            if (contactList.Count>0)
+            {
+                return View(contactList);
+
+            }
+            return View(contactList);
+            
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetContact(string Id)
         {
-            return View();
+            var contact = await _phoneService.GetAsync(Id);
+
+            return Json(contact);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<JsonResult> AddContact(Contact newContact)
         {
-            return View();
+            await _phoneService.CreateAsync(newContact);           
+
+            return Json(newContact.Id);
         }
+
+        [HttpPost]
+        public async Task<JsonResult> UpdateContact(Contact updatedContact)
+        {         
+
+            await _phoneService.UpdateAsync(updatedContact.Id, updatedContact);
+
+            return Json(updatedContact.Id);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteContact(string Id)
+        {
+
+            await _phoneService.DeleteAsync(Id);
+
+            return Json(true);
+        }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

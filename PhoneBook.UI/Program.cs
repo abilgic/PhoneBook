@@ -1,7 +1,13 @@
+using PhoneBook.UI.Models;
+using PhoneBook.UI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<PhoneBookDatabaseSettings>(
+    builder.Configuration.GetSection("PhoneBookDatabase"));
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<PhoneBookService>();
 
 var app = builder.Build();
 
