@@ -18,13 +18,10 @@ namespace PhoneContact.UI.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Index()
-        {var contactList =new List<Contact>();
+        {
+            var contactList =new List<Contact>();
              contactList= await _phoneService.GetAsync();
-            if (contactList.Count>0)
-            {
-                return View(contactList);
-
-            }
+            
             return View(contactList);
             
         }
@@ -35,13 +32,18 @@ namespace PhoneContact.UI.Controllers
 
             return Json(contact);
         }
-
+        [HttpPost]
+        public JsonResult AjaxMethod(ContactModel person)
+        {
+            
+            return Json(person);
+        }
         [HttpPost]
         public async Task<JsonResult> AddContact(Contact newContact)
         {
             await _phoneService.CreateAsync(newContact);           
 
-            return Json(newContact.Id);
+            return Json(true);
         }
 
         [HttpPost]
