@@ -1,0 +1,95 @@
+﻿@model IEnumerable<ReportModel>
+@{
+    ViewData["Title"] = "Contact List";
+}
+<div class="container">
+    <div class="card-header">@ViewData["Title"]</div>
+
+    <div class="card-body">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" id="btnGetReport">
+            Get Report List
+        </button>      
+        <div id="ContactLabel" class="alert alert-success" role="alert" style="display: none;">
+           
+        </div>
+        <div class="table">
+            <table id="tblProducts" class="tblProducts">
+                <thead>
+                    <tr>
+                        <th align="left" class="productth">Location</th>
+                        <th align="left" class="productth">ContactNumber</th>
+                        <th align="left" class="productth">PhoneCount</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+       
+
+ 
+    </div>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#tblProducts").DataTable();
+            $("#ContactLabel").hide();
+           
+        $("#btnGetReport").click(function () {
+                $("#tblProducts tbody tr").remove();
+                $.ajax({
+
+                    type: 'GET',
+
+                    url: "/Home/GetReport",
+                    dataType: 'json',
+                   
+                    success: function (data) {
+                        
+                        var items = '';
+                        $.each(data, function (i, item) { 
+                            var rows = "<tr>"
+                                + "<td class='prtoducttd'>" + item.location + "</td>"
+                                + "<td class='prtoducttd'>" + item.contactNumber + "</td>"                             
+                                + "<td class='prtoducttd'>" + item.phoneCount + "</td>"                                
+                                + "</tr>";
+                            $('#tblProducts tbody').append(rows);
+                        });
+                        $("#ContactLabel").show();
+                        if(data)
+                        {
+                            $("#ContactLabel").text("Rapor yüklendi.");
+                        }
+                        else
+                        {
+                            $("#ContactLabel").text("Rapor yüklenemedi.");
+                        }
+
+                    },
+                    error: function (ex) {
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert("Message: " + r.Message);
+                        alert("StackTrace: " + r.StackTrace);
+                        alert("ExceptionType: " + r.ExceptionType);
+                    }
+                });
+
+                var items = '';
+                $.each(data, function (i, item) {
+
+                    var rows = "<tr>"
+                        + "<td class='prtoducttd'>" + item.Location + "</td>"
+                        + "<td class='prtoducttd'>" + item.ContactNumber + "</td>"
+                        + "<td class='prtoducttd'>" + item.PhoneCount + "</td>"
+                        
+                        + "</tr>";
+                    $('#tblProducts tbody').append(rows);
+                });
+       
+    });
+    });
+    
+    </script>
+    }

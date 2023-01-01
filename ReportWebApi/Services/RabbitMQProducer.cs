@@ -10,13 +10,13 @@ namespace ReportWebApi.Services
         public void SendMessage<T>(T message)
         {
             var factory = new ConnectionFactory();
-            factory.Uri = new Uri("amqps://yarpfcbp:7R6RjJmiw2mUn3borMTyY6K0jNFW5m7v@hawk.rmq.cloudamqp.com/yarpfcbp");
+            factory.Uri = new Uri("");
             var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare("ReportQueue");
-            string json = JsonSerializer.Serialize(message);       
+            channel.QueueDeclare("ReportQ");
+            string json = JsonSerializer.Serialize(message);
             var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(exchange: "", routingKey: "ReportQueue", body: body);
+            channel.BasicPublish(exchange: "", routingKey: "ReportQ", body: body);
         }
     }
 }

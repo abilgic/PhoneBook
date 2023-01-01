@@ -9,7 +9,7 @@ namespace ReportWebApi.Controllers
     public class ReportController : Controller
     {
         private readonly IMessageProducer _messagePublisher;
-        private readonly ReportService _reportService;        
+        private readonly ReportService _reportService;
 
         public ReportController(ReportService reportService, IMessageProducer messagePublisher)
         {
@@ -20,26 +20,19 @@ namespace ReportWebApi.Controllers
         [HttpGet("GetReport")]
         public async Task<JsonResult> GetReport()
         {
-           var result= await _reportService.GetAsync();
-            var rlist=result.Select(s=>new {
-                location=s.Location,
-                contactnumber=result.Where(l=>l.Location==s.Location).Count(),
-                phoneCount=result.Where(l=>l.Location==s.Location && s.PhoneNumber != null).Count(),
-            }).ToList().OrderBy(o=>o.contactnumber);
-            try
+            var result = await _reportService.GetAsync();
+            var rlist = result.Select(s => new
             {
-                _messagePublisher.SendMessage(rlist);
-            }
-            catch (Exception e)
-            {
+                Location = s.Location,
+                ContactNumber = result.Where(l => l.Location == s.Location).Count(),
+                PhoneCount = result.Where(l => l.Location == s.Location && s.PhoneNumber != null).Count(),
+            }).ToList().OrderBy(o => o.ContactNumber);
 
-                
-            }
-            
+            // _messagePublisher.SendMessage(rlist); 
 
             return Json(rlist);
-           
+
         }
-       
+
     }
 }

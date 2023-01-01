@@ -54,15 +54,14 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="ContactModal" tabindex="-1" aria-labelledby="ContactModalModalLabel" aria-hidden="true">
+<div class="modal fade" id="ContactModal" tabindex="-1" aria-labelledby="ContactModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ContactModalModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="ContactModalLabel">Modal title</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form id="studenteForm">
+            <div class="modal-body">                
                 <div class="form-group">
                     <label>Name</label>
                     <input type="hidden" id="hdnContactId" />
@@ -92,8 +91,7 @@
                     <label>Description</label>
                     <textarea type="text" name="Description" id="Description" rows="8" class="form-control">
                     </textarea>
-                </div>
-                </form>
+                </div>               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -103,15 +101,12 @@
         </div>
     </div>
 </div>
-<input type="button" id="btnGet" value="Get Current Time" />
+
 
 @section Scripts {
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
     <script>
         $(document).ready(function () {
-            //$("#ContactTable").DataTable();
+            $("#ContactTable").DataTable();
             $("#btnUpdate").hide();
 
             $(".btnEdit").click(function () {

@@ -19,11 +19,11 @@ namespace PhoneContact.UI.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var contactList =new List<Contact>();
-             contactList= await _phoneService.GetAsync();
-            
+            var contactList = new List<Contact>();
+            contactList = await _phoneService.GetAsync();
+
             return View(contactList);
-            
+
         }
         [HttpGet]
         public async Task<JsonResult> GetContact(string Id)
@@ -32,23 +32,18 @@ namespace PhoneContact.UI.Controllers
 
             return Json(contact);
         }
-        [HttpPost]
-        public JsonResult AjaxMethod(ContactModel person)
-        {
-            
-            return Json(person);
-        }
+
         [HttpPost]
         public async Task<JsonResult> AddContact(Contact newContact)
         {
-            await _phoneService.CreateAsync(newContact);           
+            await _phoneService.CreateAsync(newContact);
 
             return Json(true);
         }
 
         [HttpPost]
         public async Task<JsonResult> UpdateContact(Contact updatedContact)
-        {         
+        {
 
             await _phoneService.UpdateAsync(updatedContact.Id, updatedContact);
 
@@ -63,7 +58,7 @@ namespace PhoneContact.UI.Controllers
 
             return Json(true);
         }
-       
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
